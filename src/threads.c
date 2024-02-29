@@ -6,33 +6,52 @@
 /*   By: vicrodri <vicrodri@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 18:20:35 by vicrodri          #+#    #+#             */
-/*   Updated: 2024/02/28 13:58:02 by vicrodri         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:59:08 by vicrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+int	philo_dead(t_philo *philo)
+{
+	pthread_mutex_lock(philo->dead_lock);
+	if (*philo->dead == 1)
+	{
+		pthread_mutex_unlock(philo->dead_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(philo->dead_lock);
+	return (0);
+}
 
 void	*philo_life(void *phil)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)phil;
-	while (*philo->dead == 0)
+	if (philo->id % 2 == 0)
+		usleep(1);
+	while (philo_dead(philo) == 0)
 	{
-		philo_eat(philo);
+		// philo_eat(philo);
 		philo_think(philo);
 		philo_sleep(philo);
 	}
 	return (0);
 }
 
-void	*monitor(void *prog)
+void	*monitor(void *phil)
 {
-	t_program	*program;
+	t_philo		*philos;
 	int			i;
 	int			j;
 
-	program = (t_program *)prog;
+	philos = (t_philo *)phil;
+	while (1)
+	{
+		if (check_death(philos) == 1)
+			break ;
+	}
 	return (NULL);
 }
 

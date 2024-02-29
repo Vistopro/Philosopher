@@ -6,12 +6,23 @@
 /*   By: vicrodri <vicrodri@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:13:48 by vicrodri          #+#    #+#             */
-/*   Updated: 2024/02/28 14:01:18 by vicrodri         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:24:17 by vicrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 #include <sys/time.h>
+
+void	print_philo(char *str, t_philo *philo, int id)
+{
+	size_t	time;
+
+	pthread_mutex_lock(philo->write_lock);
+	time = get_current_time() - philo->start_time;
+	if (!philo_dead(philo))
+		printf("%zu %d %s\n", time, id, str);
+	pthread_mutex_unlock(philo->write_lock);
+}
 
 int	ft_atoi(const char *str)
 {

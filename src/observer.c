@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   actions.c                                          :+:      :+:    :+:   */
+/*   observer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vicrodri <vicrodri@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 12:47:13 by vicrodri          #+#    #+#             */
-/*   Updated: 2024/02/29 18:07:52 by vicrodri         ###   ########.fr       */
+/*   Created: 2024/02/29 18:24:01 by vicrodri          #+#    #+#             */
+/*   Updated: 2024/02/29 18:55:38 by vicrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	philo_think(t_philo *philo)
+int	check_death(t_philo *philos)
 {
-	print_philo("is thinking", philo, philo->id);
-}
+	int	i;
 
-void	philo_sleep(t_philo *philo)
-{
-	print_philo("is sleeping", philo, philo->id);
-	ft_usleep(philo->time_to_sleep);
-}
-
-void	philo_eat(t_philo *philo)
-{
-	print_philo("is eating", philo, philo->id);
-	ft_usleep(philo->time_to_eat);
-	philo->meals_eaten++;
-	philo->last_meal = get_current_time();
+	i = 0;
+	while (i < philos->num_of_philos)
+	{
+		if (philos[i].last_meal + philos->time_to_die <= get_current_time())
+		{
+			print_philo("died", philos, philos->id);
+			pthread_mutex_lock(philos->dead_lock);
+			*philos->dead = 1;
+			pthread_mutex_unlock(philos->dead_lock);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }

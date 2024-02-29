@@ -6,7 +6,7 @@
 /*   By: vicrodri <vicrodri@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:47:16 by vicrodri          #+#    #+#             */
-/*   Updated: 2024/02/28 13:59:58 by vicrodri         ###   ########.fr       */
+/*   Updated: 2024/02/29 18:40:50 by vicrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,9 @@ void		destroy_mutex(char *str, t_program *program,
 void		philo_think(t_philo *philo);
 void		philo_sleep(t_philo *philo);
 void		philo_eat(t_philo *philo);
+void		print_philo(char *str, t_philo *philo, int id);
+int			check_death(t_philo *philo);
+int			philo_dead(t_philo *philo);
+
 
 #endif
