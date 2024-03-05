@@ -6,31 +6,11 @@
 /*   By: vicrodri <vicrodri@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:40:16 by vicrodri          #+#    #+#             */
-/*   Updated: 2024/02/28 14:02:11 by vicrodri         ###   ########.fr       */
+/*   Updated: 2024/03/05 19:09:42 by vicrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
-int	check_number(char **argv)
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (argv[i])
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (argv[i][j] < '0' || argv[i][j] > '9')
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
 
 void	init_program(t_program *program, t_philo *philo)
 {
@@ -52,7 +32,6 @@ void	init_forks(pthread_mutex_t *forks, int num)
 		i++;
 	}
 }
-
 void	init_philos(t_philo *philo, t_program *program,
 			pthread_mutex_t	*forks, char **argv)
 {
@@ -70,8 +49,21 @@ void	init_philos(t_philo *philo, t_program *program,
 		philo[i].time_to_sleep = ft_atoi(argv[4]);
 		philo[i].num_of_philos = ft_atoi(argv[1]);
 		philo[i].start_time = get_current_time();
+	}
+}
+
+void	init_philos2(t_philo *philo, t_program *program,
+			pthread_mutex_t	*forks, char **argv)
+{
+	int	i;
+
+	i = -1;
+	while (++i < ft_atoi(argv[1]))
+	{
 		if (argv[5])
 			philo[i].num_times_to_eat = ft_atoi(argv[5]);
+		else
+			philo[i].num_times_to_eat = -1;
 		philo[i].dead = &program->dead_flag;
 		philo[i].l_fork = &forks[i];
 		if (i == 0)
@@ -80,6 +72,7 @@ void	init_philos(t_philo *philo, t_program *program,
 			philo[i].r_fork = &forks[i - 1];
 		philo[i].write_lock = &program->write_lock;
 		philo[i].dead_lock = &program->dead_lock;
+		philo[i].meal_lock = &program->meal_lock;
 	}
 }
 
@@ -102,6 +95,7 @@ int	main(int argc, char **argv)
 	init_program(&program, philo);
 	init_forks(forks, ft_atoi(argv[1]));
 	init_philos(program.philos, &program, forks, argv);
+	init_philos2(program.philos, &program, forks, argv);
 	create_threads(&program, forks);
 	destroy_mutex(NULL, &program, forks);
 	return (0);

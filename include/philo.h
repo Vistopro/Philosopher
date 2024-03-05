@@ -6,7 +6,7 @@
 /*   By: vicrodri <vicrodri@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:47:16 by vicrodri          #+#    #+#             */
-/*   Updated: 2024/02/29 18:40:50 by vicrodri         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:58:18 by vicrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void		philo_eat(t_philo *philo);
 void		print_philo(char *str, t_philo *philo, int id);
 int			check_death(t_philo *philo);
 int			philo_dead(t_philo *philo);
-
+int			check_all_meals(t_philo *philos);
+int			check_number(char **argv);
 
 #endif

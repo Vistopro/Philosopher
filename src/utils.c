@@ -6,12 +6,32 @@
 /*   By: vicrodri <vicrodri@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:13:48 by vicrodri          #+#    #+#             */
-/*   Updated: 2024/02/29 18:24:17 by vicrodri         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:58:20 by vicrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 #include <sys/time.h>
+
+int	check_number(char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (argv[i])
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (argv[i][j] < '0' || argv[i][j] > '9')
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
 
 void	print_philo(char *str, t_philo *philo, int id)
 {

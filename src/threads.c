@@ -6,7 +6,7 @@
 /*   By: vicrodri <vicrodri@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 18:20:35 by vicrodri          #+#    #+#             */
-/*   Updated: 2024/02/29 18:59:08 by vicrodri         ###   ########.fr       */
+/*   Updated: 2024/03/05 18:50:54 by vicrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	*philo_life(void *phil)
 
 	philo = (t_philo *)phil;
 	if (philo->id % 2 == 0)
-		usleep(1);
+		ft_usleep(1);
 	while (philo_dead(philo) == 0)
 	{
-		// philo_eat(philo);
+		philo_eat(philo);
 		philo_think(philo);
 		philo_sleep(philo);
 	}
@@ -49,7 +49,7 @@ void	*monitor(void *phil)
 	philos = (t_philo *)phil;
 	while (1)
 	{
-		if (check_death(philos) == 1)
+		if (check_death(philos) == 1 || check_all_meals(philos) == 1)
 			break ;
 	}
 	return (NULL);
